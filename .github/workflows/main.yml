@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.DROPLET_USERNAME }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
           script: |
-            cd /root/school-mng/backend
+            cd /root/school-magment/backend
             git pull origin main
             npm install --devlopment
             npm run dev
