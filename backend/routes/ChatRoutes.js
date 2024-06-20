@@ -5,8 +5,8 @@ const twilio = require("twilio");
 
 const route = express.Router();
 const client = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
+  'ACd3bd0d94a43b2772ad9a5f684d89641b',
+  'c452542b574e9e3d1c43dba7c8e02937'
 );
 
 route.get("/", async (req, res) => {

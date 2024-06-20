@@ -1,24 +1,17 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-//LOCAL_DB_CONNECT  -localhost database
-//DB_CONNECT  -online database
 dotenv.config();
-const connection_url = process.env.LOCAL_DB_CONNECT;
+
+const connection_url = 'mongodb://127.0.0.1:27017/school-mng';
 
 mongoose.connect(connection_url, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
+  // useNewUrlParser: true, // Note: Remove this option to avoid the warning
+  // useUnifiedTopology: true, // Note: Remove this option to avoid the warning
 });
 
 mongoose.connection.once("open", () => {
-  console.log("db connnected localhost db");
-  // gfs = new mongoose.mongo.GridFSBucket(connect.db, {
-  //     bucketName: "uploads"
-  // })
+  console.log("MongoDB connected successfully");
 });
 
-//export default mongoose;
 module.exports = mongoose;
