@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.DROPLET_USERNAME }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
           script: |
-            cd /root/school-magment/backend  # Adjust path as necessary
+            cd ./root/school-magment/backend  # Adjust path as necessary
             git pull origin main
             npm install --development
             npm run dev
