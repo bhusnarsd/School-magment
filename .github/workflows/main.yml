@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -18,8 +18,16 @@ jobs:
         with:
           node-version: '22'
 
-      # - name: Install SSH Client
-      #   run: sudo apt-get install -y openssh-client
+      - name: Install SSH Client
+        run: sudo apt-get install -y openssh-client
+
+      - name: Set up SSH Agent and Add Key
+        id: ssh-setup
+        run: |
+          echo "${{ secrets.DROPLET_SSH_KEY }}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
+          eval $(ssh-agent -s)
+          echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add /tmp/ssh_key
 
       - name: Deploy to DigitalOcean Droplet
         uses: appleboy/ssh-action@master
@@ -27,8 +35,9 @@ jobs:
           host: ${{ secrets.DROPLET_HOST }}
           username: ${{ secrets.DROPLET_USERNAME }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            cd ./root/school-magment/backend  # Adjust path as necessary
+            cd ./root/school-management/backend  # Adjust path as necessary
             git pull origin main
             npm install --development
             npm run dev
