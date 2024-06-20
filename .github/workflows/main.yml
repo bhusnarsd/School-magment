@@ -18,11 +18,8 @@ jobs:
         with:
           node-version: '22'
 
-      # - name: Install dependencies
-      #   run: npm install
-
-      # - name: Run tests
-      #   run: npm test
+      - name: Install SSH Client
+        run: sudo apt-get install -y openssh-client
 
       - name: Deploy to DigitalOcean Droplet
         uses: appleboy/ssh-action@master
@@ -31,8 +28,9 @@ jobs:
           username: ${{ secrets.DROPLET_USERNAME }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
           script: |
-            cd /root/school-magment/backend
+            cd /root/school-magment/backend  # Adjust path as necessary
             git pull origin main
-            npm install --devlopment
+            npm install --development
             npm run dev
-            # pm2 restart <your_app_
+            # Optionally, restart your application using PM2:
+            # pm2 restart <your_app_name>
