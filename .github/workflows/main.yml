@@ -27,7 +27,7 @@ jobs:
           echo "${{ secrets.DROPLET_SSH_KEY }}" > /tmp/ssh_key
           chmod 600 /tmp/ssh_key
           eval $(ssh-agent -s)
-          echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add /tmp/ssh_key
+          ssh-add /tmp/ssh_key <<< "${{ secrets.SSH_PASSPHRASE }}"
 
       - name: Deploy to DigitalOcean Droplet
         uses: appleboy/ssh-action@master
@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.DROPLET_SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            cd ./root/school-management/backend  # Adjust path as necessary
+            cd /root/school-management/backend  # Adjust path as necessary
             git pull origin main
             npm install --development
             npm run dev
