@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.DROPLET_USERNAME }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
           script: |
-            cd /path/to/your/application
+            cd /root/school-mng
             git pull origin main
             npm install --devlopment
             npm run dev
